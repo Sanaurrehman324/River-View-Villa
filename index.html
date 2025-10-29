@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virtual Tour Embed</title>
+  <meta name="description" content="Embedded virtual tour" />
+  <style>
+    /* Reset body so iframe takes full viewport */
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #000;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Container centers the iframe and provides a small header bar */
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+      z-index: 10;
+      color: #fff;
+    }
+
+    header .title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    header a.button {
+      margin-left: auto;
+      text-decoration: none;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+
+    /* Make iframe fill remaining space */
+    .frame-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 0; /* important for flexbox */
+    }
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Small fallback block for very old browsers or if iframe blocked */
+    .fallback {
+      display: none;
+      padding: 24px;
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title">Virtual Tour</div>
+      <a class="button" href="https://virtualtoureasy.com/tour/viewer/index.php?v=5k9eFoagdy24m3ziHrZJ" target="_blank" rel="noopener">Open in new tab</a>
+    </header>
+
+    <div class="frame-wrap">
+      <!-- Embedded virtual tour -->
+      <iframe
+        src="https://virtualtoureasy.com/tour/viewer/index.php?v=Vl3ag7EuJTR1mW5L8vK4"
+        title="Villa-Eco Zero"
+        allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      ></iframe>
+
+      <!-- Fallback (shown only if you'd like to unhide it with script or CSS) -->
+      <div class="fallback" id="fallback">
+        <p>Unable to display the virtual tour inline. <a href="https://virtualtoureasy.com/tour/viewer/index.php?v=5k9eFoagdy24m3ziHrZJ" target="_blank" rel="noopener">Open the tour in a new tab</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // If iframe fails to load (e.g., blocked by X-Frame-Options), show fallback link.
+    // This attempts to detect whether the iframe has loaded by setting a short timeout.
+    // Note: detection isn't perfect due to cross-origin restrictions, but it's helpful.
+    (function() {
+      var iframe = document.querySelector('iframe');
+      var fallback = document.getElementById('fallback');
+
+      // If iframe hasn't fired load after 3s, show fallback
+      var loaded = false;
+      iframe.addEventListener('load', function(){ loaded = true; });
+      setTimeout(function(){
+        if (!loaded) {
+          // show fallback UI
+          fallback.style.display = 'block';
+        }
+      }, 3000);
+    })();
+  </script>
+</body>
+</html>
